@@ -1,15 +1,19 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const PASSWORD = "19 21 3 8 1 19 13 1 18 20 20 5 1 13"; // numeric-alphabet password
+  // numeric-alphabet password for "such a smart team"
+  const PASSWORD = "19 21 3 8 1 19 13 1 18 20 20 5 1 13";
+
   const input = document.getElementById("pwd");
   const btn = document.getElementById("submitBtn");
   const err = document.getElementById("err");
   const welcome = document.getElementById("welcome");
   const welcomeText = document.getElementById("welcomeText");
 
+  // typewriter reveal for welcome
   function showWelcome() {
-    document.querySelector(".stage").style.display = "none"; // hide form
+    document.querySelector(".stage").style.display = "none";
     welcome.classList.add("show");
     welcomeText.textContent = "";
+
     const text = "check under your table";
     let i = 0;
     const interval = setInterval(() => {
@@ -19,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 80);
   }
 
+  // shake animation for wrong input
   function shake(el) {
     el.style.animation = "shake 0.3s";
     el.addEventListener("animationend", () => {
@@ -26,6 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }, { once: true });
   }
 
+  // check password attempt
   function attempt() {
     if (input.value.trim() === PASSWORD) {
       err.textContent = "";
@@ -37,10 +43,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // button click
   btn.addEventListener("click", attempt);
+
+  // enter key
   input.addEventListener("keydown", (e) => {
     if (e.key === "Enter") attempt();
   });
 
+  // autofocus
   input.focus();
 });
