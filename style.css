@@ -2,26 +2,39 @@
 body {
   margin: 0;
   padding: 0;
-  background: #000; /* black background */
-  color: #0f0; /* green hacker text */
+  background: #000; /* Black background */
+  color: #0f0; /* Green text for that old-school hacker vibe */
   font-family: monospace;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  position: relative;
 }
 
-/* Container */
+/* Subtle grain effect (optional) */
+body::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Xw8AArIBgVHtVxoAAAAASUVORK5CYII=") repeat;
+  opacity: 0.05;
+  pointer-events: none;
+}
+
+/* Container for centering everything */
 .container {
   text-align: center;
+  z-index: 1;
 }
 
 /* Logo */
 .logo {
   width: 200px;
   display: block;
-  margin: 0 auto 20px auto;
+  margin: 0 auto 30px auto; /* center + spacing below */
 }
 
 /* Password form */
@@ -29,22 +42,27 @@ form {
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 8px;
 }
 
 input[type="password"] {
-  background: #111;
-  border: 1px solid #0f0;
+  background: #111; /* dark input box */
+  border: 1px solid #0f0; /* green border */
   color: #0f0;
   padding: 10px;
   font-size: 16px;
   width: 250px;
+  outline: none;
+}
+
+input::placeholder {
+  color: #0a0; /* darker placeholder */
 }
 
 button {
   background: #0f0;
   border: none;
   padding: 10px 15px;
-  margin-left: 10px;
   font-size: 16px;
   cursor: pointer;
   transition: background 0.3s;
@@ -54,13 +72,27 @@ button:hover {
   background: #0a0;
 }
 
+/* Error message styling */
 #error {
   margin-top: 10px;
   color: red;
   font-size: 14px;
 }
 
-/* Secret message */
+/* Shake animation for wrong password */
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}
+
+.shake {
+  animation: shake 0.3s;
+}
+
+/* Secret message hidden by default */
 .hidden {
   display: none;
 }
@@ -71,7 +103,7 @@ button:hover {
   color: #0f0;
 }
 
-/* Glitch effect for text */
+/* Flicker/glitch effect for secret message */
 .glitch-text {
   position: relative;
   display: inline-block;
@@ -85,17 +117,4 @@ button:hover {
   60% { opacity: 0.9; }
   80% { opacity: 0.4; }
   100% { opacity: 1; }
-}
-
-/* Shake effect */
-@keyframes shake {
-  0% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  50% { transform: translateX(5px); }
-  75% { transform: translateX(-5px); }
-  100% { transform: translateX(0); }
-}
-
-.shake {
-  animation: shake 0.3s;
 }
