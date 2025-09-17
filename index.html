@@ -3,81 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>5 - Sandor</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-      background-color: #fff;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .logo {
-      font-size: 60px;
-      font-weight: bold;
-      color: #4285f4;
-    }
-
-    .search-box {
-      margin-top: 20px;
-    }
-
-    .search-box input {
-      width: 500px;
-      max-width: 80vw;
-      padding: 12px 20px;
-      font-size: 18px;
-      border: 1px solid #ccc;
-      border-radius: 25px;
-      outline: none;
-    }
-
-    .buttons {
-      margin-top: 20px;
-    }
-
-    .buttons button {
-      padding: 10px 20px;
-      margin: 5px;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
-      background-color: #f8f9fa;
-      border: 1px solid #ccc;
-    }
-
-    .buttons button:hover {
-      background-color: #f1f1f1;
-    }
-
-    footer {
-      margin-top: auto;
-      padding: 10px;
-      font-size: 14px;
-      color: gray;
-    }
-  </style>
+  <title>DBTC5 - Sandor</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="logo">5 - Sandor</div>
+  <div class="container" id="login-box">
+    <!-- DBTC Logo -->
+    <img src="dbtc-logo.png" alt="DBTC Logo"> <!-- Replace with your logo file -->
 
-  <div class="search-box">
-    <input type="text" placeholder="Search 5 - Sandor...">
+    <!-- Password Box -->
+    <div>
+      <input type="password" id="password" placeholder="Insert Password">
+    </div>
+    <button onclick="checkPassword()">Unlock</button>
+
+    <!-- Notification -->
+    <div id="notification">✅ Correct! Unlocking...</div>
   </div>
 
-  <div class="buttons">
-    <button>Search Class Files</button>
-    <button>I'm Feeling Sandor</button>
-  </div>
+  <!-- Final Message -->
+  <div id="complete">Execution Complete</div>
 
-  <footer>
-    © 2025 5 - Sandor | DBTC
-  </footer>
+  <script src="script.js"></script>
 </body>
 </html>
