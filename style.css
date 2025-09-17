@@ -1,23 +1,38 @@
+/* General Page */
 body {
   margin: 0;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f4f4f4;
-  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  font-family: "Segoe UI", Arial, sans-serif;
 }
 
-.container {
+/* Login Card */
+.card {
+  background: #fff;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0px 6px 18px rgba(0,0,0,0.1);
   text-align: center;
+  width: 320px;
+  animation: fadeIn 0.6s ease;
 }
 
 .logo {
-  width: 120px;
-  display: block;
-  margin: 0 auto 20px auto;
+  width: 100px;
+  margin-bottom: 15px;
 }
 
+.title {
+  margin-bottom: 20px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Input & Button */
 .input-container {
   display: flex;
   justify-content: center;
@@ -26,11 +41,16 @@ body {
 
 input {
   padding: 12px;
-  width: 220px;
-  font-size: 16px;
+  width: 200px;
+  font-size: 15px;
   border: 2px solid #ccc;
   border-radius: 8px 0 0 8px;
   outline: none;
+  transition: border 0.3s;
+}
+
+input:focus {
+  border-color: #007bff;
 }
 
 button {
@@ -41,22 +61,33 @@ button {
   background-color: #007bff;
   color: white;
   cursor: pointer;
+  transition: background 0.3s;
 }
 
 button:hover {
   background-color: #0056b3;
 }
 
+/* Error Message */
 #error-message {
-  margin-top: 15px;
+  margin-top: 12px;
   font-size: 14px;
   color: red;
   display: none;
 }
 
+/* Welcome Message */
 #welcome {
   display: none;
   font-size: 32px;
   font-weight: bold;
+  color: #222;
   text-align: center;
+  animation: fadeIn 0.6s ease;
+}
+
+/* Fade Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
