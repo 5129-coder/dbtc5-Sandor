@@ -5,9 +5,9 @@ function checkPassword() {
   const errorMessage = document.getElementById("error-message");
 
   if (input === "fivesandor") {
-    // Hide login
+    // Hide login with fade out
     loginBox.style.display = "none";
-    // Show welcome text
+    // Show welcome text with fade in
     welcome.style.display = "flex";
     welcome.style.justifyContent = "center";
     welcome.style.alignItems = "center";
