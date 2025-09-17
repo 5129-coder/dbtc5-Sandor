@@ -1,123 +1,379 @@
 <!DOCTYPE html>
+<!--
+  dbtc5-sandor — single-file "2010s stalker-ish" login page
+  - Place this file in the same folder as dbtc-logo.png
+  - The correct password (exact string) is set in the JS variable CORRECT_PASSWORD
+  - Works offline; no external resources.
+-->
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DBTC 5 - Sandor</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      background: #f9f9f9;
-      font-family: Arial, sans-serif;
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>DBTC5 — Sandor (Archive)</title>
+<style>
+  /* ----------------------
+     Basic / layout
+     ---------------------- */
+  :root{
+    --bg:#050407;
+    --green:#33ff33;
+    --muted:rgba(51,255,51,0.12);
+    --card:#08080a;
+    --err:#ff5a6e;
+    --font: "Courier New", Courier, monospace;
+  }
+  html,body{height:100%;margin:0;background:var(--bg);color:var(--green);font-family:var(--font);-webkit-font-smoothing:antialiased}
+  .stage{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+    position:relative;
+    overflow:hidden;
+  }
 
-    .logo {
-      width: 150px;
-      margin-bottom: 30px;
-    }
+  /* ----------------------
+     Vintage card (center)
+     ---------------------- */
+  .card{
+    width:360px;
+    max-width:92%;
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border:1px solid rgba(51,255,51,0.07);
+    padding:20px 18px;
+    border-radius:8px;
+    box-shadow:0 12px 40px rgba(0,0,0,0.7);
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    align-items:center;
+    position:relative;
+    z-index:2;
+  }
 
-    .box {
-      background: white;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-      text-align: center;
-      max-width: 300px;
-      width: 100%;
-    }
+  /* logo — use provided file dbtc-logo.png */
+  .logo{
+    width:120px;
+    height:auto;
+    image-rendering:pixelated; /* vintage pixel look if PNG is low-res */
+    filter:contrast(1.05) saturate(0.95) drop-shadow(0 6px 18px rgba(0,0,0,0.6));
+  }
 
-    h1 {
-      font-size: 1.5rem;
-      margin-bottom: 20px;
-      color: #333;
-    }
+  /* marquee / vintage top text */
+  .marq{
+    width:100%;
+    font-size:12px;
+    color:rgba(51,255,51,0.14);
+    letter-spacing:1px;
+    overflow:hidden;
+  }
+  .marq-inner{display:inline-block;white-space:nowrap; animation:marq 8s linear infinite}
+  @keyframes marq{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
-    input[type="password"] {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 1rem;
-      outline: none;
-      transition: 0.2s;
-      margin-bottom: 15px;
-    }
+  /* input row */
+  .row{display:flex;width:100%;gap:8px;align-items:center}
+  input[type="text"],
+  input[type="password"]{
+    flex:1;
+    padding:12px 10px;
+    background:transparent;
+    border:1px solid rgba(51,255,51,0.08);
+    border-radius:6px;
+    color:var(--green);
+    outline:none;
+    font-size:14px;
+    caret-color:var(--green);
+    box-shadow:inset 0 -2px 8px rgba(0,0,0,0.6);
+  }
+  input::placeholder{color:rgba(51,255,51,0.18); text-transform:lowercase}
+  .btn{
+    background:linear-gradient(180deg,#0b0b0b,#070707);
+    border:1px solid rgba(51,255,51,0.12);
+    padding:10px 12px;
+    border-radius:6px;
+    color:var(--green);
+    cursor:pointer;
+    font-weight:700;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .btn:active{transform:translateY(1px)}
 
-    input[type="password"]:focus {
-      border-color: #0056b3;
-      box-shadow: 0 0 6px rgba(0, 86, 179, 0.3);
-    }
+  /* subtle small footer inside card */
+  .meta{width:100%;display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:6px}
 
-    button {
-      width: 100%;
-      padding: 12px;
-      background: #0056b3;
-      border: none;
-      border-radius: 8px;
-      color: white;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
+  /* error message (aria-live) */
+  .error{
+    color:var(--err);
+    font-family:var(--font);
+    font-size:13px;
+    margin-top:4px;
+    min-height:18px;
+    display:block;
+  }
 
-    button:hover {
-      background: #004494;
-    }
+  /* ----------------------
+     CRT / Noise / Flicker
+     ---------------------- */
+  /* scanlines overlay */
+  .scanlines{
+    pointer-events:none;
+    position:absolute;inset:0;background-image:linear-gradient(rgba(0,0,0,0) 50%, rgba(0,0,0,0.06) 50%);background-size:100% 4px;mix-blend-mode:overlay;opacity:0.45;
+    z-index:1;
+  }
+  /* grain (tiny noise) */
+  .grain{
+    pointer-events:none;
+    position:absolute;inset:0;
+    background-image:radial-gradient(rgba(0,0,0,0.03) 1px, transparent 1px);
+    background-size:3px 3px;
+    opacity:0.12;
+    z-index:3;
+    mix-blend-mode:overlay;
+  }
+  /* faint green vignette */
+  .vignette{
+    pointer-events:none;position:absolute;inset:-20%;z-index:0;
+    background:radial-gradient(ellipse at center, rgba(51,255,51,0.02) 0%, rgba(0,0,0,0.65) 60%);
+  }
 
-    .message {
-      margin-top: 20px;
-      font-size: 1rem;
-      font-weight: bold;
-    }
+  /* flicker animation for whole card (subtle) */
+  .card.flicker{ animation:cardFlick 5s linear infinite; }
+  @keyframes cardFlick{
+    0%{opacity:1}
+    2%{opacity:0.92}
+    3%{opacity:1}
+    7%{opacity:0.96}
+    8%{opacity:1}
+    100%{opacity:1}
+  }
 
-    .success {
-      color: green;
-    }
+  /* glitch overlay lines */
+  .glitch-line{
+    position:absolute;left:-10%;right:-10%;height:2px;background:linear-gradient(90deg, transparent, rgba(51,255,51,0.06), transparent);
+    top:20%;mix-blend-mode:screen;opacity:0.12;transform:skewX(-12deg);z-index:4;
+    animation:gl1 6s linear infinite;
+  }
+  @keyframes gl1{0%{transform:translateX(-110%) skewX(-12deg)}50%{transform:translateX(110%) skewX(-12deg)}100%{transform:translateX(-110%) skewX(-12deg)}}
 
-    .error {
-      color: red;
-    }
-  </style>
+  /* ----------------------
+     Full-screen welcome / typewriter / CRT flicker
+     ---------------------- */
+  #welcomeFull{
+    position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:10;visibility:hidden;opacity:0;
+    background:rgba(0,0,0,0.85);backdrop-filter: blur(2px);flex-direction:column;padding:20px;
+    color:var(--green);font-family:var(--font);
+  }
+  .welcome-box{
+    border:1px solid rgba(51,255,51,0.06);
+    padding:24px 30px;border-radius:8px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    box-shadow:0 30px 80px rgba(0,0,0,0.8);font-size:22px;letter-spacing:0.6px;
+    max-width:90%;text-align:center;
+  }
+  /* blinking cursor appended by JS */
+  .cursor{
+    display:inline-block;width:10px;height:22px;background:var(--green);margin-left:8px;vertical-align:middle;animation:blink 0.9s step-end infinite;
+  }
+  @keyframes blink{50%{opacity:0}}
+  /* flicker effect on the welcome box */
+  .welcome-box.flicker{ animation:welcomeFlick 4s linear infinite; }
+  @keyframes welcomeFlick{
+    0%{filter:brightness(1)}
+    7%{filter:brightness(0.7) saturate(0.7)}
+    8%{filter:brightness(1.1)}
+    14%{filter:brightness(0.9)}
+    15%{filter:brightness(1)}
+    100%{filter:brightness(1)}
+  }
+
+  /* ----------------------
+     Shake animation (for wrong password)
+     ---------------------- */
+  @keyframes shakeX {
+    0%{transform:translateX(0)}
+    20%{transform:translateX(-8px)}
+    40%{transform:translateX(8px)}
+    60%{transform:translateX(-6px)}
+    80%{transform:translateX(6px)}
+    100%{transform:translateX(0)}
+  }
+
+  /* ----------------------
+     Responsive tweaks
+     ---------------------- */
+  @media (max-width:420px){
+    .card{width:92%;padding:16px}
+    .logo{width:96px}
+    .welcome-box{font-size:18px;padding:18px}
+  }
+</style>
 </head>
 <body>
-  <img src="dbtc-logo.png" alt="DBTC Logo" class="logo">
+  <div class="stage" role="main">
+    <!-- decorative overlays -->
+    <div class="vignette" aria-hidden="true"></div>
+    <div class="scanlines" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+    <div class="glitch-line" aria-hidden="true"></div>
 
-  <div class="box" id="loginBox">
-    <h1>Insert Password</h1>
-    <input type="password" id="password" placeholder="Enter password">
-    <button onclick="checkPassword()">Submit</button>
-    <div class="message" id="message"></div>
+    <!-- center card (login) -->
+    <div class="card flicker" id="loginCard" aria-hidden="false">
+      <!-- Logo (local file) -->
+      <img src="dbtc-logo.png" alt="DBTC logo" class="logo" />
+
+      <!-- small vintage marquee text -->
+      <div class="marq" aria-hidden="true" title="archive">
+        <div class="marq-inner">access portal • sandor class • archived • 2010 vibe • do not share &nbsp; • &nbsp;</div>
+      </div>
+
+      <!-- password row -->
+      <div class="row" style="width:100%">
+        <!-- INPUT: placeholder exactly "insert password" (lowercase) -->
+        <!-- Accessibility: aria-label and aria-describedby link to error -->
+        <input
+          type="text"
+          id="pwInput"
+          inputmode="numeric"
+          autocomplete="off"
+          placeholder="insert password"
+          aria-label="Password input"
+          aria-describedby="pwError"
+          autofocus
+        />
+        <button class="btn" id="checkBtn" aria-label="Check password" aria-pressed="false">✔</button>
+      </div>
+
+      <!-- inline error message (aria-live polite) -->
+      <div id="pwError" class="error" role="status" aria-live="polite" aria-atomic="true" style="display:none"></div>
+
+      <!-- footer meta -->
+      <div class="meta"><div>vintage ui • 2010</div><div id="dots" aria-hidden="true">•••</div></div>
+    </div>
+
+    <!-- full screen welcome message (hidden until correct password) -->
+    <div id="welcomeFull" role="region" aria-live="polite" aria-label="Welcome message">
+      <div class="welcome-box" id="welcomeBox" aria-hidden="true"></div>
+    </div>
   </div>
 
-  <div class="box" id="completeBox" style="display: none;">
-    <h1 class="success">Execution Complete ✅</h1>
-  </div>
+<script>
+/* ============================================================
+   Single-file "stalker-ish" login behavior
+   - Keep CORRECT_PASSWORD as the single source of truth (exact match).
+   - Update MESSAGE if you want a different reveal text.
+   ============================================================ */
 
-  <script>
-    function checkPassword() {
-      const password = document.getElementById("password").value;
-      const message = document.getElementById("message");
-      const loginBox = document.getElementById("loginBox");
-      const completeBox = document.getElementById("completeBox");
+/* ---- Configuration (edit here if needed) ---- */
+/* NOTE: password must be the exact numeric string with spaces as requested */
+const CORRECT_PASSWORD = "19 21 3 8 1 19 13 1 18 20 20 5 1 13";
+const MESSAGE_TEXT = "check under your table";
 
-      if (password === "5sandor") {
-        message.textContent = "Correct password!";
-        message.className = "message success";
-        setTimeout(() => {
-          loginBox.style.display = "none";
-          completeBox.style.display = "block";
-        }, 800);
-      } else {
-        message.textContent = "Incorrect password. Try again.";
-        message.className = "message error";
-      }
+/* ---- Elements ---- */
+const pwInput = document.getElementById("pwInput");
+const checkBtn = document.getElementById("checkBtn");
+const loginCard = document.getElementById("loginCard");
+const pwError = document.getElementById("pwError");
+const welcomeFull = document.getElementById("welcomeFull");
+const welcomeBox = document.getElementById("welcomeBox");
+const dots = document.getElementById("dots");
+
+/* small animated dots in the card footer */
+let dotIdx = 0;
+setInterval(()=>{ dots.textContent = ".".repeat((dotIdx%3)+1); dotIdx++; }, 700);
+
+/* Utility: show inline error, shake, focus/select input */
+function showInlineError(msg){
+  pwError.style.display = "block";
+  pwError.textContent = msg;
+  // shake animation applied to the row or card
+  loginCard.style.animation = "shakeX 360ms ease";
+  // remove the animation property after it ends so it can replay later
+  setTimeout(()=> { loginCard.style.animation = ""; }, 370);
+  // re-focus and select the input for easy retyping
+  pwInput.focus();
+  pwInput.select();
+}
+
+/* Utility: hide error */
+function hideInlineError(){
+  pwError.style.display = "none";
+  pwError.textContent = "";
+}
+
+/* Typewriter effect: reveal text char-by-char in the target element */
+function typeWriter(text, targetEl, speed = 55, cb){
+  targetEl.textContent = "";
+  let i=0;
+  const t = setInterval(()=>{
+    targetEl.textContent += text.charAt(i);
+    i++;
+    if(i >= text.length){
+      clearInterval(t);
+      if(cb) cb();
     }
-  </script>
+  }, speed);
+}
+
+/* Show welcome full-screen with typewriter + cursor + flicker */
+function revealWelcome(){
+  // hide login
+  loginCard.setAttribute("aria-hidden","true");
+  loginCard.style.display = "none";
+
+  // prepare welcome area
+  welcomeFull.style.visibility = "visible";
+  welcomeFull.style.opacity = "1";
+  welcomeFull.style.zIndex = "10";
+
+  welcomeBox.classList.add("flicker");
+  welcomeBox.setAttribute("aria-hidden","false");
+
+  // typewriter then add blinking cursor
+  typeWriter(MESSAGE_TEXT, welcomeBox, 55, ()=>{
+    const c = document.createElement("span");
+    c.className = "cursor";
+    welcomeBox.appendChild(c);
+  });
+}
+
+/* Main check function -- compares EXACT string (trim applied to leading/trailing) */
+function checkPassword(){
+  hideInlineError();
+  const val = pwInput.value.trim(); // trim to remove accidental leading/trailing spaces
+  if(val === CORRECT_PASSWORD){
+    // correct: reveal welcome after tiny flicker
+    // subtle visual feedback before switching
+    loginCard.style.transition = "opacity 260ms ease";
+    loginCard.style.opacity = "0";
+    setTimeout(revealWelcome, 320);
+  } else {
+    // incorrect
+    showInlineError("Wrong password. Try again.");
+  }
+}
+
+/* Event bindings */
+checkBtn.addEventListener("click", checkPassword);
+pwInput.addEventListener("keydown", function(e){
+  if(e.key === "Enter") checkPassword();
+});
+
+/* Accessibility: ensure focus on load and input selected */
+window.addEventListener("load", ()=> {
+  // autofocus attribute set in HTML; ensure focus programmatically too
+  try{ pwInput.focus(); }catch(e){}
+});
+
+/* Prevent form autocomplete weirdness (no form tag used) */
+/* Additional: allow pasting numeric string easily */
+pwInput.addEventListener("paste", (e)=>{
+  // allow paste but sanitize to basic characters (not necessary; we accept digits and spaces)
+  // keep default paste behavior
+});
+
+/* EOF */
+</script>
 </body>
 </html>
