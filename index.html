@@ -9,20 +9,20 @@
 <body>
   <div class="container" id="login-box">
     <!-- DBTC Logo -->
-    <img src="dbtc-logo.png" alt="DBTC Logo"> <!-- Replace with your logo file -->
+    <img src="dbtc-logo.png" alt="DBTC Logo" class="logo"> <!-- Replace with your logo file -->
 
-    <!-- Password Box -->
-    <div>
-      <input type="password" id="password" placeholder="Insert Password">
+    <!-- Password Box + Check Button -->
+    <div class="input-container">
+      <input type="password" id="password" placeholder="insert password">
+      <button onclick="checkPassword()">✔</button>
     </div>
-    <button onclick="checkPassword()">Unlock</button>
 
-    <!-- Notification -->
-    <div id="notification">✅ Correct! Unlocking...</div>
+    <!-- Error Message -->
+    <div id="error-message">Wrong password, please try again</div>
   </div>
 
-  <!-- Final Message -->
-  <div id="complete">Execution Complete</div>
+  <!-- Final Greeting -->
+  <div id="welcome">welcome vito.</div>
 
   <script src="script.js"></script>
 </body>
