@@ -1,119 +1,101 @@
-/* White background */
+/* General page look */
 body {
-  background: #ffffff;
-  color: #000000;
+  margin: 0;
+  padding: 0;
+  background: #000; /* black background */
+  color: #0f0; /* green hacker text */
   font-family: monospace;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  margin: 0;
   overflow: hidden;
-  position: relative;
 }
 
-/* Subtle grain */
-body::after {
-  content: "";
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Xw8AArIBgVHtVxoAAAAASUVORK5CYII=") repeat;
-  opacity: 0.05;
-  pointer-events: none;
-}
-
+/* Container */
 .container {
   text-align: center;
 }
 
+/* Logo */
 .logo {
   width: 200px;
-  margin-bottom: 30px;
   display: block;
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto 20px auto;
 }
 
-/* Password form centered under logo */
-.form {
+/* Password form */
+form {
   display: flex;
   justify-content: center;
-  gap: 8px;
+  align-items: center;
 }
 
-#password {
+input[type="password"] {
+  background: #111;
+  border: 1px solid #0f0;
+  color: #0f0;
   padding: 10px;
-  width: 220px;
-  background: #fff;
-  border: 1px solid #000;
-  color: #000;
-  font-family: monospace;
   font-size: 16px;
-  outline: none;
-}
-
-#password::placeholder {
-  color: #999;
+  width: 250px;
 }
 
 button {
-  padding: 10px 16px;
-  background: #000;
+  background: #0f0;
   border: none;
+  padding: 10px 15px;
+  margin-left: 10px;
+  font-size: 16px;
   cursor: pointer;
-  font-weight: bold;
-  color: #fff;
-  transition: background 0.2s;
+  transition: background 0.3s;
 }
 
 button:hover {
-  background: #444;
+  background: #0a0;
 }
 
 #error {
-  margin-top: 12px;
+  margin-top: 10px;
   color: red;
   font-size: 14px;
 }
 
-/* Shake animation */
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  20%, 60% { transform: translateX(-5px); }
-  40%, 80% { transform: translateX(5px); }
-}
-
-.shake {
-  animation: shake 0.3s;
-}
-
-/* Hidden message */
-#message {
-  font-size: 28px;
-  white-space: nowrap;
-  overflow: hidden;
-  border-right: 2px solid #000;
-  width: 0;
-  margin: 40px auto 0;
-}
-
+/* Secret message */
 .hidden {
   display: none;
 }
 
-/* Typewriter effect */
-.typewriter {
+#secret-message {
+  margin-top: 30px;
+  font-size: 22px;
+  color: #0f0;
+}
+
+/* Glitch effect for text */
+.glitch-text {
+  position: relative;
   display: inline-block;
-  animation: typing 3s steps(30, end) forwards, blink 0.7s infinite;
+  animation: flicker 1.5s infinite alternate;
 }
 
-@keyframes typing {
-  from { width: 0; }
-  to { width: 100%; }
+@keyframes flicker {
+  0% { opacity: 1; }
+  20% { opacity: 0.8; }
+  40% { opacity: 0.6; }
+  60% { opacity: 0.9; }
+  80% { opacity: 0.4; }
+  100% { opacity: 1; }
 }
 
-@keyframes blink {
-  0%, 100% { border-color: transparent; }
-  50% { border-color: #000; }
+/* Shake effect */
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}
+
+.shake {
+  animation: shake 0.3s;
 }
