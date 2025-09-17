@@ -1,27 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DBTC5 Sandor Login</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DBTC5 Sandor Login</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<img src="dbtc-logo.png" alt="DBTC Logo" class="logo">
+  <!-- logo -->
+  <img src="dbtc-logo.png.png" alt="DBTC Logo" class="logo">
 
-<div class="stage">
-  <div class="panel">
-    <input id="pwd" type="password" placeholder="insert password">
-    <button id="submitBtn">✔</button>
+  <!-- login stage -->
+  <div class="stage">
+    <div class="panel">
+      <input id="pwd" type="password" placeholder="insert password" aria-label="Password input">
+      <button id="submitBtn" aria-label="Submit password">✔</button>
+    </div>
+    <div class="error" id="err" aria-live="polite"></div>
   </div>
-  <div class="error" id="err"></div>
-</div>
 
-<div class="welcome" id="welcome">
-  <div class="text" id="welcomeText"></div>
-</div>
+  <!-- welcome screen -->
+  <div class="welcome" id="welcome">
+    <div class="text" id="welcomeText"></div>
+  </div>
 
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
