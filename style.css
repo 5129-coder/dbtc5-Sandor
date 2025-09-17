@@ -1,3 +1,4 @@
+/* base */
 body {
   margin: 0;
   height: 100vh;
@@ -17,9 +18,10 @@ body {
   margin-bottom: 40px;
   max-width: 200px;
   width: 40%;
+  filter: drop-shadow(0 0 6px rgba(255, 0, 0, 0.7));
 }
 
-/* panel */
+/* password panel */
 .panel {
   display: flex;
   align-items: center;
@@ -34,7 +36,9 @@ input {
   outline: none;
   width: 250px;
 }
-input::placeholder { color: #888; }
+input::placeholder {
+  color: #888;
+}
 button {
   padding: 10px 16px;
   background: #eee;
@@ -44,6 +48,7 @@ button {
   font-weight: bold;
 }
 
+/* error message */
 .error {
   color: red;
   margin-top: 12px;
@@ -51,6 +56,7 @@ button {
   min-height: 18px;
 }
 
+/* welcome screen */
 .welcome {
   position: fixed;
   inset: 0;
@@ -75,7 +81,7 @@ button {
   text-shadow: 0 0 6px rgba(0,255,0,0.7);
 }
 
-/* shake animation for wrong input */
+/* shake animation */
 @keyframes shake {
   0% { transform: translateX(0); }
   20% { transform: translateX(-6px); }
