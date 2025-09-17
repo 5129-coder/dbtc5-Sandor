@@ -12,7 +12,7 @@
     <img src="dbtc-logo.png" alt="DBTC Logo" class="logo">
 
     <!-- Password Form -->
-    <form id="loginForm" aria-label="Password form">
+    <form id="loginForm" aria-label="Password form" class="form">
       <input 
         type="password" 
         id="password" 
@@ -21,8 +21,10 @@
         autofocus
       >
       <button type="submit" aria-label="Check password">✔</button>
-      <div id="error" aria-live="polite"></div>
     </form>
+
+    <!-- Error message -->
+    <div id="error" aria-live="polite"></div>
 
     <!-- Hidden message -->
     <div id="message" class="hidden">check under your table</div>
