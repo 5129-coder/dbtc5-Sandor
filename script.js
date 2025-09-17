@@ -10,8 +10,10 @@ form.addEventListener("submit", function(e) {
   e.preventDefault();
 
   if (passwordInput.value === correctPassword) {
-    // Hide form
+    // Hide form + logo
     form.style.display = "none";
+    document.querySelector(".logo").style.display = "none";
+
     // Show message
     message.classList.remove("hidden");
     message.classList.add("typewriter");
