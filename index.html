@@ -2,32 +2,30 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DBTC5-Sandor</title>
+  <title>DBTC Access</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
     <!-- Logo -->
-    <img src="dbtc-logo.png" alt="DBTC Logo" class="logo">
+    <img src="dbtc-logo.png.png" alt="DBTC Logo" class="logo">
 
     <!-- Password Form -->
-    <form id="loginForm" aria-label="Password form" class="form">
+    <form id="login-form" aria-label="Login Form">
       <input 
         type="password" 
         id="password" 
         placeholder="insert password" 
-        aria-label="Password input" 
-        autofocus
-      >
-      <button type="submit" aria-label="Check password">✔</button>
+        aria-label="Password"
+        autofocus>
+      <button type="submit" aria-label="Check Password">✔</button>
+      <p id="error" aria-live="polite"></p>
     </form>
 
-    <!-- Error message -->
-    <div id="error" aria-live="polite"></div>
-
-    <!-- Hidden message -->
-    <div id="message" class="hidden">check under your table</div>
+    <!-- Hidden Message -->
+    <div id="secret-message" class="hidden">
+      <p class="glitch-text">check under your table</p>
+    </div>
   </div>
 
   <script src="script.js"></script>
