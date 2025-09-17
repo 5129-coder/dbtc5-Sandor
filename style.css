@@ -10,15 +10,18 @@ body {
 
 .container {
   text-align: center;
-  background: white;
-  padding: 40px;
-  border-radius: 15px;
-  box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
 }
 
-img {
-  width: 120px; /* DBTC logo size */
-  margin-bottom: 20px;
+.logo {
+  width: 120px;
+  display: block;
+  margin: 0 auto 20px auto;
+}
+
+.input-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 input {
@@ -26,16 +29,15 @@ input {
   width: 220px;
   font-size: 16px;
   border: 2px solid #ccc;
-  border-radius: 8px;
+  border-radius: 8px 0 0 8px;
   outline: none;
-  margin-bottom: 15px;
 }
 
 button {
-  padding: 12px 25px;
+  padding: 12px 18px;
   font-size: 16px;
   border: none;
-  border-radius: 8px;
+  border-radius: 0 8px 8px 0;
   background-color: #007bff;
   color: white;
   cursor: pointer;
@@ -45,15 +47,16 @@ button:hover {
   background-color: #0056b3;
 }
 
-#notification {
+#error-message {
   margin-top: 15px;
-  font-size: 15px;
-  color: green;
+  font-size: 14px;
+  color: red;
   display: none;
 }
 
-#complete {
+#welcome {
   display: none;
-  font-size: 28px;
+  font-size: 32px;
   font-weight: bold;
+  text-align: center;
 }
