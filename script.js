@@ -1,25 +1,26 @@
-function checkPassword() {
-  const input = document.getElementById("password").value;
-  const loginBox = document.getElementById("login-box");
-  const welcome = document.getElementById("welcome");
-  const errorMessage = document.getElementById("error-message");
+// Correct password (numbers with spaces)
+const correctPassword = "19 21 3 8 1 19 13 1 18 20 20 5 1 13";
 
-  if (input === "fivesandor") {
-    // Hide login with fade out
-    loginBox.style.display = "none";
-    // Show welcome text with fade in
-    welcome.style.display = "flex";
-    welcome.style.justifyContent = "center";
-    welcome.style.alignItems = "center";
-    welcome.style.height = "100vh";
+const form = document.getElementById("loginForm");
+const passwordInput = document.getElementById("password");
+const errorDiv = document.getElementById("error");
+const message = document.getElementById("message");
+
+form.addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  if (passwordInput.value === correctPassword) {
+    // Hide form
+    form.style.display = "none";
+    // Show message
+    message.classList.remove("hidden");
+    message.classList.add("typewriter");
   } else {
-    errorMessage.style.display = "block";
-  }
-}
-
-// Allow pressing Enter instead of clicking button
-document.getElementById("password").addEventListener("keypress", function(e) {
-  if (e.key === "Enter") {
-    checkPassword();
+    // Wrong password
+    errorDiv.textContent = "Wrong password. Try again.";
+    passwordInput.classList.add("shake");
+    setTimeout(() => passwordInput.classList.remove("shake"), 300);
+    passwordInput.focus();
+    passwordInput.select();
   }
 });
