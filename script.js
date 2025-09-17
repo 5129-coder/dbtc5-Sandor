@@ -8,11 +8,18 @@ const clickSound = document.getElementById("click-sound");
 // Correct password (numbers with spaces)
 const correctPassword = "19 21 3 8 1 19 13 1 18 20 20 5 1 13";
 
+// Play sound on every keypress for subtle hacker vibe
+passwordInput.addEventListener("keydown", function() {
+  clickSound.currentTime = 0; // reset to start
+  clickSound.play();
+});
+
 // Handle form submission
 form.addEventListener("submit", function (e) {
   e.preventDefault();
 
-  // Play click sound
+  // Play click sound on submit
+  clickSound.currentTime = 0;
   clickSound.play();
 
   const entered = passwordInput.value.trim();
