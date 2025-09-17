@@ -1,17 +1,19 @@
 function checkPassword() {
   const input = document.getElementById("password").value;
-  const notification = document.getElementById("notification");
   const loginBox = document.getElementById("login-box");
-  const complete = document.getElementById("complete");
+  const welcome = document.getElementById("welcome");
+  const errorMessage = document.getElementById("error-message");
 
-  if (input === "5sandor") {
-    notification.style.display = "block";
-    setTimeout(() => {
-      loginBox.style.display = "none";
-      complete.style.display = "block";
-    }, 1000);
+  if (input === "fivesandor") {
+    // Hide login
+    loginBox.style.display = "none";
+    // Show welcome text
+    welcome.style.display = "flex";
+    welcome.style.justifyContent = "center";
+    welcome.style.alignItems = "center";
+    welcome.style.height = "100vh";
   } else {
-    alert("❌ Incorrect Password. Try again.");
+    errorMessage.style.display = "block";
   }
 }
 
