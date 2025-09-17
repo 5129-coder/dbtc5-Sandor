@@ -7,21 +7,19 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container" id="login-box">
-    <!-- DBTC Logo -->
-    <img src="dbtc-logo.png" alt="DBTC Logo" class="logo"> <!-- Replace with your logo file -->
-
-    <!-- Password Box + Check Button -->
+  <div class="card" id="login-box">
+    <img src="dbtc-logo.png" alt="DBTC Logo" class="logo">
+    
+    <h2 class="title">Class Portal</h2>
+    
     <div class="input-container">
       <input type="password" id="password" placeholder="insert password">
       <button onclick="checkPassword()">✔</button>
     </div>
 
-    <!-- Error Message -->
-    <div id="error-message">Wrong password, please try again</div>
+    <p id="error-message">Wrong password, please try again</p>
   </div>
 
-  <!-- Final Greeting -->
   <div id="welcome">welcome vito.</div>
 
   <script src="script.js"></script>
