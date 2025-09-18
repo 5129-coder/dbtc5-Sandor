@@ -1,117 +1,40 @@
-/* base */
 body {
-  margin: 0;
-  height: 100vh;
-  background: black;
-  color: #eee;
-  font-family: "Courier New", monospace;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  overflow: hidden;
+    background-color: black;
+    color: white;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
 }
 
-/* logo */
 .logo {
-  display: block;
-  margin-bottom: 40px;
-  max-width: 200px;
-  width: 40%;
-  filter: drop-shadow(0 0 6px rgba(255, 0, 0, 0.7));
+    display: block;
+    margin: 40px auto 20px auto;
+    max-width: 200px; /* adjust size of logo */
 }
 
-/* password panel */
-.panel {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-input {
-  padding: 10px;
-  font-size: 16px;
-  background: black;
-  border: 1px solid #eee;
-  color: #eee;
-  outline: none;
-  width: 250px;
-}
-input::placeholder {
-  color: #888;
-}
-button {
-  padding: 10px 16px;
-  background: #eee;
-  color: black;
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
+.search-bar {
+    width: 80%;
+    max-width: 500px;
+    padding: 10px;
+    font-size: 16px;
+    margin: 20px auto;
+    display: block;
+    border-radius: 5px;
+    border: none;
 }
 
-/* error message */
-.error {
-  color: red;
-  margin-top: 12px;
-  font-size: 14px;
-  min-height: 18px;
+#loading-container {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* centers vertically */
+    background: black;
 }
 
-/* loading screen with video */
-.loading {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: black;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.4s ease;
-}
-.loading.show {
-  opacity: 1;
-  pointer-events: auto;
-}
-.loading video {
-  width: 60vw;       /* responsive width */
-  max-width: 300px;  /* limit size for phones/tablets */
-  height: auto;      /* maintain aspect ratio */
-  object-fit: contain;
-  border: 2px solid #0f0;
-  box-shadow: 0 0 10px rgba(0, 255, 0, 0.6);
-}
-
-/* welcome screen */
-.welcome {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: rgba(0,0,0,0.95);
-  color: #0f0;
-  font-family: "Courier New", monospace;
-  font-size: 32px;
-  letter-spacing: 2px;
-  text-transform: lowercase;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.8s ease;
-}
-.welcome.show {
-  opacity: 1;
-  pointer-events: auto;
-}
-.welcome .text {
-  text-shadow: 0 0 6px rgba(0,255,0,0.7);
-}
-
-/* shake animation */
-@keyframes shake {
-  0% { transform: translateX(0); }
-  20% { transform: translateX(-6px); }
-  40% { transform: translateX(6px); }
-  60% { transform: translateX(-4px); }
-  80% { transform: translateX(4px); }
-  100% { transform: translateX(0); }
+#loading-video {
+    width: 150px;   /* perfect size for phones */
+    height: auto;
+    max-width: 60%; /* won’t overflow on iPad */
+    border-radius: 10px;
 }
