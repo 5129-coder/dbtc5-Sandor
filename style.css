@@ -1,8 +1,8 @@
-/* Black background + stalker vibe */
+/* Base */
 body {
   margin: 0;
   padding: 0;
-  background: #000;
+  background: black;
   color: #0f0;
   font-family: monospace;
   height: 100vh;
@@ -10,30 +10,19 @@ body {
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  position: relative;
 }
 
-/* Subtle grain overlay */
-body::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Xw8AArIBgVHtVxoAAAAASUVORK5CYII=") repeat;
-  opacity: 0.04;
-  pointer-events: none;
-}
+/* Hidden utility */
+.hidden { display: none; }
 
-/* Center container */
-.container {
-  text-align: center;
-  z-index: 2;
-}
+/* Container */
+.container { text-align: center; }
 
 /* Logo */
 .logo {
-  width: 220px;
+  width: 200px;
+  margin-bottom: 20px;
   display: block;
-  margin: 0 auto 22px auto;
 }
 
 /* Form */
@@ -41,50 +30,45 @@ form {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
 }
-
 input[type="password"] {
   background: #111;
   border: 1px solid #0f0;
   color: #0f0;
-  padding: 10px;
-  font-size: 16px;
-  width: 260px;
-  outline: none;
+  padding: 8px;
+  font-size: 14px;
+  width: 220px;
 }
-
 input::placeholder {
-  color: rgba(15, 255, 15, 0.25);
+  color: rgba(15, 255, 15, 0.3);
 }
-
 button {
   background: #0f0;
   border: none;
-  padding: 10px 14px;
-  font-size: 16px;
+  padding: 8px 12px;
   cursor: pointer;
-  transition: background 0.18s;
+  font-size: 14px;
 }
-
 button:hover { background: #0a0; }
 
+/* Error message */
 #error {
-  margin-top: 12px;
   color: #ff5a6e;
-  font-size: 14px;
-  min-height: 18px;
+  font-size: 12px;
+  min-height: 16px;
+  margin-top: 6px;
 }
 
-/* Shake animation for wrong password */
+/* Shake animation */
 @keyframes shake {
   0% { transform: translateX(0); }
-  25% { transform: translateX(-6px); }
-  50% { transform: translateX(6px); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
   75% { transform: translateX(-4px); }
   100% { transform: translateX(0); }
 }
-.shake { animation: shake 340ms ease; }
+.shake { animation: shake 300ms ease; }
 
 /* Loader */
 #loader {
@@ -93,59 +77,53 @@ button:hover { background: #0a0; }
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(0,0,0,0.65);
-  z-index: 99;
+  background: rgba(0,0,0,0.6);
+  z-index: 10;
 }
-
-#loader img {
-  max-width: 250px;
-  width: 50%;
-  height: auto;
+.loader-img {
+  width: 150px; /* small & mobile friendly */
+  max-width: 80%;
 }
 
 /* Secret message */
 #secret-message {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 12px;
+  margin-top: 20px;
 }
-
-#secret-text {
-  font-size: 16px;
-  text-transform: lowercase;
-  color: #0f0;
-  font-family: monospace;
-  text-align: center;
-}
-
-/* Glitch/flicker effect for message */
 .glitch-text {
-  position: relative;
-  display: inline-block;
+  font-size: 16px; /* smaller for phones */
+  color: #0f0;
   padding: 8px 12px;
-  border-radius: 4px;
-  animation: flicker 1.6s infinite alternate;
-  border: 1px solid rgba(15,255,15,0.06);
-  background: rgba(0,0,0,0.45);
+  border: 1px solid rgba(15,255,15,0.1);
+  display: inline-block;
+  animation: flicker 1.5s infinite alternate;
 }
 
+/* Flicker effect */
 @keyframes flicker {
-  0% { opacity: 1; filter: none; transform: translateY(0); }
-  20% { opacity: 0.88; filter: blur(0.2px); transform: translateY(-1px); }
-  40% { opacity: 0.7; filter: blur(0.6px); transform: translateY(0.5px); }
-  60% { opacity: 0.95; filter: none; transform: translateY(0); }
-  80% { opacity: 0.6; filter: blur(0.9px); transform: translateY(-0.5px); }
-  100% { opacity: 1; filter: none; transform: translateY(0); }
+  0% { opacity: 1; }
+  20% { opacity: 0.8; }
+  40% { opacity: 0.6; }
+  60% { opacity: 0.9; }
+  80% { opacity: 0.7; }
+  100% { opacity: 1; }
 }
 
-/* Utility hidden */
-.hidden { display: none; }
+/* Cursor */
+.cursor {
+  display: inline-block;
+  width: 6px;
+  height: 16px;
+  background: #0f0;
+  margin-left: 4px;
+  vertical-align: middle;
+  animation: blink 0.8s step-end infinite;
+}
+@keyframes blink { 0%,50%,100% { opacity:1 } 25%,75% { opacity:0 } }
 
-/* Responsive for phones/iPad */
-@media (max-width:420px){
-  .logo{ width:170px; margin-bottom:18px; }
-  input[type="password"]{ width:200px; }
-  #secret-text{ font-size:14px; }
-  #loader img{ max-width:180px; }
+/* Mobile responsive */
+@media(max-width:420px){
+  .logo { width: 150px; margin-bottom: 14px; }
+  input[type="password"]{ width: 180px; font-size: 12px; }
+  .glitch-text{ font-size: 14px; padding: 6px 10px; }
+  .loader-img{ width: 120px; }
 }
