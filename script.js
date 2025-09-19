@@ -2,15 +2,15 @@
 const form = document.getElementById("login-form");
 const passwordInput = document.getElementById("password");
 const errorMsg = document.getElementById("error");
+const loader = document.getElementById("loader");
 const secretMessage = document.getElementById("secret-message");
 const secretText = document.getElementById("secret-text");
-const loader = document.getElementById("loader");
 const clickSound = document.getElementById("click-sound");
 
 /* Config */
 const CORRECT = "19 21 3 8 1 19 13 1 18 20 20 5 1 13";
 const MESSAGE = "check under your table";
-const LOADING_MS = 1500; // loader duration
+const LOADING_MS = 1200; // loader duration
 
 /* Play click sound */
 function playClick() {
@@ -21,72 +21,60 @@ function playClick() {
 }
 
 /* Typewriter effect */
-function typeWriter(text, el, speed = 55, cb) {
+function typeWriter(text, el, speed=50, cb){
   el.textContent = "";
-  let i = 0;
-  const t = setInterval(() => {
+  let i=0;
+  const t = setInterval(()=>{
     el.textContent += text.charAt(i);
     i++;
-    if (i >= text.length) {
+    if(i>=text.length){
       clearInterval(t);
-      if (cb) cb();
+      if(cb) cb();
     }
   }, speed);
 }
 
-/* Show loader then reveal secret message */
-function showLoaderThenReveal() {
+/* Show loader and then reveal secret message */
+function showLoaderThenReveal(){
   loader.classList.remove("hidden");
-  loader.setAttribute("aria-hidden", "false");
+  loader.setAttribute("aria-hidden","false");
 
-  setTimeout(() => {
+  setTimeout(()=>{
     loader.classList.add("hidden");
-    loader.setAttribute("aria-hidden", "true");
+    loader.setAttribute("aria-hidden","true");
 
     secretMessage.classList.remove("hidden");
-    secretMessage.setAttribute("aria-hidden", "false");
+    secretMessage.setAttribute("aria-hidden","false");
 
-    typeWriter(MESSAGE, secretText, 45, () => {
-      const cursor = document.createElement("span");
-      cursor.className = "cursor";
-      cursor.style.display = "inline-block";
-      cursor.style.width = "6px";
-      cursor.style.height = "16px";
-      cursor.style.background = "#0f0";
-      cursor.style.marginLeft = "5px";
-      cursor.style.verticalAlign = "middle";
-      cursor.style.animation = "blink 0.9s step-end infinite";
-      secretText.appendChild(cursor);
+    typeWriter(MESSAGE, secretText, 50, ()=>{
+      const c = document.createElement("span");
+      c.className="cursor";
+      secretText.appendChild(c);
     });
+
   }, LOADING_MS);
 }
 
-/* Submit handler */
-form.addEventListener("submit", function(e) {
+/* Form submit */
+form.addEventListener("submit", e=>{
   e.preventDefault();
   playClick();
 
-  const val = passwordInput.value.trim();
-
-  if (val === CORRECT) {
-    // Correct: hide form & logo
-    form.style.display = "none";
-    const logo = document.querySelector(".logo");
-    if (logo) logo.style.display = "none";
-
-    // Show loader and then secret
+  if(passwordInput.value.trim() === CORRECT){
+    form.style.display="none";
+    document.querySelector(".logo").style.display="none";
     showLoaderThenReveal();
   } else {
-    // Wrong password
     errorMsg.textContent = "Wrong password. Try again.";
     passwordInput.classList.add("shake");
-    setTimeout(() => passwordInput.classList.remove("shake"), 360);
+    setTimeout(()=>passwordInput.classList.remove("shake"), 350);
     passwordInput.focus();
     passwordInput.select();
   }
 });
 
-/* Click sound for typing */
+/* Play click on button mousedown */
+form.querySelector('button[type="submit"]').addEventListener("mousedown", playClick);
+
+/* Play click when typing */
 passwordInput.addEventListener("keydown", playClick);
-const submitButton = form.querySelector('button[type="submit"]');
-submitButton.addEventListener("mousedown", playClick);
