@@ -1,32 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DBTC5 Sandor Login</title>
+  <meta charset="utf-8" />
+  <title>DBTC Access</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="container" id="main-container">
+    <!-- Logo (note exact filename) -->
+    <img src="dbtc-logo.png.png" alt="DBTC Logo" class="logo">
 
-  <!-- logo -->
-  <img src="dbtc-logo.png.png" alt="DBTC Logo" class="logo">
+    <!-- Password Form -->
+    <form id="login-form" aria-label="Login Form">
+      <input 
+        type="password" 
+        id="password" 
+        placeholder="insert password" 
+        aria-label="Password"
+        autocomplete="off"
+        inputmode="numeric"
+        autofocus
+      >
+      <button type="submit" aria-label="Check Password">✔</button>
+      <p id="error" role="status" aria-live="polite"></p>
+    </form>
 
-  <!-- login stage -->
-  <div class="stage">
-    <div class="panel">
-      <input id="pwd" type="password" placeholder="insert password" aria-label="Password input">
-      <button id="submitBtn" aria-label="Submit password">✔</button>
+    <!-- Loading overlay (hidden until unlocked) -->
+    <div id="loader" class="hidden" role="status" aria-live="polite" aria-label="Loading">
+      <div class="loader-box">
+        <div class="loader-dots" aria-hidden="true"><span>.</span><span>.</span><span>.</span></div>
+        <div class="loader-text">loading...</div>
+      </div>
     </div>
-    <div class="error" id="err" aria-live="polite"></div>
+
+    <!-- Secret message (hidden until after loading) -->
+    <div id="secret-message" class="hidden" aria-hidden="true">
+      <p class="glitch-text" id="secret-text" aria-live="polite"></p>
+    </div>
   </div>
 
-  <!-- welcome screen -->
-  <div class="welcome" id="welcome">
-    <div class="text" id="welcomeText"></div>
-  </div>
-
-  <!-- click sound -->
-  <audio id="clickSound" src="click.mp3" preload="auto"></audio>
+  <!-- Click sound file (same folder) -->
+  <audio id="click-sound" src="click.mp3" preload="auto"></audio>
 
   <script src="script.js"></script>
 </body>
