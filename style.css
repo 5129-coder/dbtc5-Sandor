@@ -1,92 +1,161 @@
-/* base */
+/* BLACK background + stalker vibe */
 body {
   margin: 0;
+  padding: 0;
+  background: #000;
+  color: #0f0;
+  font-family: monospace;
   height: 100vh;
-  background: black;
-  color: #eee;
-  font-family: "Courier New", monospace;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
   overflow: hidden;
+  position: relative;
 }
 
-/* logo */
+/* Subtle grain overlay */
+body::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Xw8AArIBgVHtVxoAAAAASUVORK5CYII=") repeat;
+  opacity: 0.04;
+  pointer-events: none;
+}
+
+/* Center container */
+.container {
+  text-align: center;
+  z-index: 2;
+}
+
+/* Logo centered in middle */
 .logo {
+  width: 220px;
   display: block;
-  margin-bottom: 40px;
-  max-width: 200px;
-  width: 40%;
-  filter: drop-shadow(0 0 6px rgba(255, 0, 0, 0.7));
+  margin: 0 auto 22px auto;
 }
 
-/* password panel */
-.panel {
+/* Form */
+form {
   display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
-input {
+
+input[type="password"] {
+  background: #111;
+  border: 1px solid #0f0;
+  color: #0f0;
   padding: 10px;
   font-size: 16px;
-  background: black;
-  border: 1px solid #eee;
-  color: #eee;
+  width: 260px;
   outline: none;
-  width: 250px;
-}
-input::placeholder {
-  color: #888;
-}
-button {
-  padding: 10px 16px;
-  background: #eee;
-  color: black;
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
 }
 
-/* error message */
-.error {
-  color: red;
+input::placeholder {
+  color: rgba(15, 255, 15, 0.25);
+}
+
+button {
+  background: #0f0;
+  border: none;
+  padding: 10px 14px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+
+button:hover { background: #0a0; }
+
+#error {
   margin-top: 12px;
+  color: #ff5a6e;
   font-size: 14px;
   min-height: 18px;
 }
 
-/* welcome screen */
-.welcome {
+/* Shake animation for wrong password */
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  50% { transform: translateX(6px); }
+  75% { transform: translateX(-4px); }
+  100% { transform: translateX(0); }
+}
+.shake { animation: shake 340ms ease; }
+
+/* LOADER (center of viewport) */
+#loader {
   position: fixed;
   inset: 0;
   display: flex;
-  justify-content: center;
   align-items: center;
-  background: rgba(0,0,0,0.95);
-  color: #0f0;
-  font-family: "Courier New", monospace;
-  font-size: 32px;
-  letter-spacing: 2px;
-  text-transform: lowercase;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.8s ease;
-}
-.welcome.show {
-  opacity: 1;
-  pointer-events: auto;
-}
-.welcome .text {
-  text-shadow: 0 0 6px rgba(0,255,0,0.7);
+  justify-content: center;
+  z-index: 9;
+  background: rgba(0,0,0,0.65); /* dim behind content */
 }
 
-/* shake animation */
-@keyframes shake {
-  0% { transform: translateX(0); }
-  20% { transform: translateX(-6px); }
-  40% { transform: translateX(6px); }
-  60% { transform: translateX(-4px); }
-  80% { transform: translateX(4px); }
-  100% { transform: translateX(0); }
+/* Loader box */
+.loader-box{
+  border: 1px solid rgba(15,255,15,0.06);
+  padding: 18px 28px;
+  border-radius: 8px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  box-shadow: 0 18px 60px rgba(0,0,0,0.75);
+  text-align:center;
+  color: #0f0;
+}
+
+/* Dots animation */
+.loader-dots { font-size: 28px; letter-spacing: 8px; margin-bottom: 6px; }
+.loader-dots span { opacity: 0; display:inline-block; transform: translateY(-2px); }
+.loader-dots span:nth-child(1){ animation: dot 1s infinite 0s; }
+.loader-dots span:nth-child(2){ animation: dot 1s infinite 0.15s; }
+.loader-dots span:nth-child(3){ animation: dot 1s infinite 0.3s; }
+@keyframes dot {
+  0% { opacity: 0; transform: translateY(-4px); }
+  40% { opacity: 1; transform: translateY(0); }
+  80% { opacity: 0.3; transform: translateY(-2px); }
+  100% { opacity: 0; transform: translateY(-4px); }
+}
+
+.loader-text { font-size: 14px; opacity: 0.9; letter-spacing: 1px; text-transform: lowercase; }
+
+/* Secret message area (after loader) */
+#secret-message {
+  margin-top: 30px;
+}
+
+/* Glitch / flicker effect */
+.glitch-text {
+  position: relative;
+  display: inline-block;
+  font-size: 22px;
+  padding: 12px 18px;
+  border-radius: 6px;
+  animation: flicker 1.6s infinite alternate;
+  border: 1px solid rgba(15,255,15,0.06);
+  background: rgba(0,0,0,0.45);
+}
+
+/* flicker */
+@keyframes flicker {
+  0% { opacity: 1; filter: none; transform: translateY(0); }
+  20% { opacity: 0.88; filter: blur(0.2px); transform: translateY(-1px); }
+  40% { opacity: 0.7; filter: blur(0.6px); transform: translateY(0.5px); }
+  60% { opacity: 0.95; filter: none; transform: translateY(0); }
+  80% { opacity: 0.6; filter: blur(0.9px); transform: translateY(-0.5px); }
+  100% { opacity: 1; filter: none; transform: translateY(0); }
+}
+
+/* Utility hidden */
+.hidden { display: none; }
+
+/* Small responsive tune */
+@media (max-width:420px){
+  .logo{ width:170px; margin-bottom:18px; }
+  input[type="password"]{ width:200px; }
+  .glitch-text{ font-size:18px; padding:12px; }
 }
