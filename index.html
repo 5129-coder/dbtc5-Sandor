@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DBTC5 Sandor Login</title>
+  <title>DBTC Access</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="container">
 
-  <div class="container" id="main-container">
     <!-- Logo -->
     <img src="dbtc-logo.png.png" alt="DBTC Logo" class="logo">
 
@@ -20,22 +20,22 @@
         placeholder="insert password" 
         aria-label="Password"
         autocomplete="off"
-        inputmode="numeric"
         autofocus
       >
       <button type="submit" aria-label="Check Password">✔</button>
       <p id="error" role="status" aria-live="polite"></p>
     </form>
 
-    <!-- Loader (hidden until unlocked) -->
-    <div id="loader" class="hidden" role="status" aria-live="polite">
-      <img src="loading.gif" alt="Loading animation">
+    <!-- Loader (hidden initially) -->
+    <div id="loader" class="hidden" aria-live="polite" aria-hidden="true">
+      <img src="loading.gif" alt="Loading..." class="loader-img">
     </div>
 
-    <!-- Secret message (hidden until after loader) -->
+    <!-- Secret message (hidden initially) -->
     <div id="secret-message" class="hidden" aria-hidden="true">
-      <p class="glitch-text" id="secret-text" aria-live="polite"></p>
+      <p class="glitch-text" id="secret-text"></p>
     </div>
+
   </div>
 
   <!-- Click sound -->
