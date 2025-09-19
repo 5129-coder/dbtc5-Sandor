@@ -27,7 +27,6 @@ body {
   align-items: center;
   gap: 10px;
 }
-
 input {
   padding: 10px;
   font-size: 16px;
@@ -37,11 +36,9 @@ input {
   outline: none;
   width: 250px;
 }
-
 input::placeholder {
   color: #888;
 }
-
 button {
   padding: 10px 16px;
   background: #eee;
@@ -76,12 +73,10 @@ button {
   pointer-events: none;
   transition: opacity 0.8s ease;
 }
-
 .welcome.show {
   opacity: 1;
   pointer-events: auto;
 }
-
 .welcome .text {
   text-shadow: 0 0 6px rgba(0,255,0,0.7);
 }
