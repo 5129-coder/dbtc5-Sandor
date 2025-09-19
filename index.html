@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>DBTC Access</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DBTC5 Sandor Login</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
   <div class="container" id="main-container">
-    <!-- Logo (note exact filename) -->
+    <!-- Logo -->
     <img src="dbtc-logo.png.png" alt="DBTC Logo" class="logo">
 
     <!-- Password Form -->
@@ -25,21 +27,18 @@
       <p id="error" role="status" aria-live="polite"></p>
     </form>
 
-    <!-- Loading overlay (hidden until unlocked) -->
-    <div id="loader" class="hidden" role="status" aria-live="polite" aria-label="Loading">
-      <div class="loader-box">
-        <div class="loader-dots" aria-hidden="true"><span>.</span><span>.</span><span>.</span></div>
-        <div class="loader-text">loading...</div>
-      </div>
+    <!-- Loader (hidden until unlocked) -->
+    <div id="loader" class="hidden" role="status" aria-live="polite">
+      <img src="loading.gif" alt="Loading animation">
     </div>
 
-    <!-- Secret message (hidden until after loading) -->
+    <!-- Secret message (hidden until after loader) -->
     <div id="secret-message" class="hidden" aria-hidden="true">
       <p class="glitch-text" id="secret-text" aria-live="polite"></p>
     </div>
   </div>
 
-  <!-- Click sound file (same folder) -->
+  <!-- Click sound -->
   <audio id="click-sound" src="click.mp3" preload="auto"></audio>
 
   <script src="script.js"></script>
