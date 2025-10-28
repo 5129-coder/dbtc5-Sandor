@@ -1,69 +1,102 @@
-/* Elements */
-const form = document.getElementById("login-form");
-const passwordInput = document.getElementById("password");
-const errorMsg = document.getElementById("error");
-const secretMessage = document.getElementById("secret-message");
-const secretText = document.getElementById("secret-text");
-const clickSound = document.getElementById("click-sound");
-
-/* Config */
-const CORRECT = "19 21 3 8 1 19 13 1 18 20 20 5 1 13";
-const MESSAGE = "check under your table";
-
-/* Play click sound */
-function playClick() {
-  try {
-    clickSound.currentTime = 0;
-    clickSound.play();
-  } catch (e) {}
+/* base */
+body {
+  margin: 0;
+  height: 100vh;
+  background: black;
+  color: #eee;
+  font-family: "Courier New", monospace;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
 }
 
-/* Typewriter effect */
-function typeWriter(text, el, speed=50, cb){
-  el.textContent = "";
-  let i=0;
-  const t = setInterval(()=>{
-    el.textContent += text.charAt(i);
-    i++;
-    if(i>=text.length){
-      clearInterval(t);
-      if(cb) cb();
-    }
-  }, speed);
+/* logo */
+.logo {
+  display: block;
+  margin-bottom: 40px;
+  max-width: 200px;
+  width: 40%;
+  filter: drop-shadow(0 0 6px rgba(255, 0, 0, 0.7));
 }
 
-/* Reveal secret message */
-function revealSecret(){
-  secretMessage.classList.remove("hidden");
-  secretMessage.setAttribute("aria-hidden","false");
-
-  typeWriter(MESSAGE, secretText, 50, ()=>{
-    const c = document.createElement("span");
-    c.className="cursor";
-    secretText.appendChild(c);
-  });
+/* panel */
+.panel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-/* Form submit */
-form.addEventListener("submit", e=>{
-  e.preventDefault();
-  playClick();
+input {
+  padding: 10px;
+  font-size: 16px;
+  background: black;
+  border: 1px solid #eee;
+  color: #eee;
+  outline: none;
+  width: 250px;
+}
 
-  if(passwordInput.value.trim() === CORRECT){
-    form.style.display="none";
-    document.querySelector(".logo").style.display="none";
-    revealSecret();
-  } else {
-    errorMsg.textContent = "Wrong password. Try again.";
-    passwordInput.classList.add("shake");
-    setTimeout(()=>passwordInput.classList.remove("shake"), 350);
-    passwordInput.focus();
-    passwordInput.select();
-  }
-});
+input::placeholder {
+  color: #888;
+}
 
-/* Play click on button press */
-form.querySelector('button[type="submit"]').addEventListener("mousedown", playClick);
+button {
+  padding: 10px 16px;
+  background: #eee;
+  color: black;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
 
-/* Play click while typing */
-passwordInput.addEventListener("keydown", playClick);
+/* error message */
+.error {
+  color: red;
+  margin-top: 12px;
+  font-size: 14px;
+  min-height: 18px;
+}
+
+/* welcome screen */
+.welcome {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.95);
+  color: #0f0;
+  font-family: "Courier New", monospace;
+  font-size: 18px;
+  letter-spacing: 1px;
+  text-align: center;
+  text-transform: lowercase;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+}
+
+.welcome.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.welcome .text {
+  text-shadow: 0 0 6px rgba(0, 255, 0, 0.7);
+}
+
+/* shake animation */
+@keyframes shake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+  100% { transform: translateX(0); }
+}
+
+.stage.shake {
+  animation: shake 0.3s;
+}
