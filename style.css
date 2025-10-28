@@ -1,113 +1,102 @@
-/* Base */
+/* base */
 body {
   margin: 0;
-  padding: 0;
-  background: black;
-  color: #0f0;
-  font-family: monospace;
   height: 100vh;
+  background: black;
+  color: #eee;
+  font-family: "Courier New", monospace;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   overflow: hidden;
 }
 
-/* Hidden utility */
-.hidden { display: none; }
-
-/* Container */
-.container { text-align: center; }
-
-/* Logo */
+/* logo */
 .logo {
-  width: 200px;
-  margin-bottom: 20px;
   display: block;
+  margin-bottom: 40px;
+  max-width: 200px;
+  width: 40%;
+  filter: drop-shadow(0 0 6px rgba(255, 0, 0, 0.7));
 }
 
-/* Form */
-form {
+/* panel */
+.panel {
   display: flex;
-  justify-content: center;
   align-items: center;
   gap: 10px;
 }
-input[type="password"] {
-  background: #111;
-  border: 1px solid #0f0;
-  color: #0f0;
-  padding: 8px;
-  font-size: 14px;
-  width: 220px;
+
+input {
+  padding: 10px;
+  font-size: 16px;
+  background: black;
+  border: 1px solid #eee;
+  color: #eee;
+  outline: none;
+  width: 250px;
 }
+
 input::placeholder {
-  color: rgba(15, 255, 15, 0.3);
+  color: #888;
 }
+
 button {
-  background: #0f0;
+  padding: 10px 16px;
+  background: #eee;
+  color: black;
   border: none;
-  padding: 8px 12px;
   cursor: pointer;
+  font-weight: bold;
+}
+
+/* error message */
+.error {
+  color: red;
+  margin-top: 12px;
   font-size: 14px;
-}
-button:hover { background: #0a0; }
-
-/* Error message */
-#error {
-  color: #ff5a6e;
-  font-size: 12px;
-  min-height: 16px;
-  margin-top: 6px;
+  min-height: 18px;
 }
 
-/* Shake animation */
+/* welcome screen */
+.welcome {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.95);
+  color: #0f0;
+  font-family: "Courier New", monospace;
+  font-size: 18px;
+  letter-spacing: 1px;
+  text-align: center;
+  text-transform: lowercase;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+}
+
+.welcome.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.welcome .text {
+  text-shadow: 0 0 6px rgba(0, 255, 0, 0.7);
+}
+
+/* shake animation */
 @keyframes shake {
   0% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  50% { transform: translateX(5px); }
-  75% { transform: translateX(-4px); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
   100% { transform: translateX(0); }
 }
-.shake { animation: shake 300ms ease; }
 
-/* Secret message */
-#secret-message {
-  margin-top: 20px;
-}
-.glitch-text {
-  font-size: 16px; /* smaller for phones */
-  color: #0f0;
-  padding: 8px 12px;
-  border: 1px solid rgba(15,255,15,0.1);
-  display: inline-block;
-  animation: flicker 1.5s infinite alternate;
-}
-
-/* Flicker effect */
-@keyframes flicker {
-  0% { opacity: 1; }
-  20% { opacity: 0.8; }
-  40% { opacity: 0.6; }
-  60% { opacity: 0.9; }
-  80% { opacity: 0.7; }
-  100% { opacity: 1; }
-}
-
-/* Cursor */
-.cursor {
-  display: inline-block;
-  width: 6px;
-  height: 16px;
-  background: #0f0;
-  margin-left: 4px;
-  vertical-align: middle;
-  animation: blink 0.8s step-end infinite;
-}
-@keyframes blink { 0%,50%,100% { opacity:1 } 25%,75% { opacity:0 } }
-
-/* Mobile responsive */
-@media(max-width:420px){
-  .logo { width: 150px; margin-bottom: 14px; }
-  input[type="password"]{ width: 180px; font-size: 12px; }
-  .glitch-text{ font-size: 14px; padding: 6px 10px; }
+.stage.shake {
+  animation: shake 0.3s;
 }
