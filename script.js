@@ -2,7 +2,6 @@
 const form = document.getElementById("login-form");
 const passwordInput = document.getElementById("password");
 const errorMsg = document.getElementById("error");
-const loader = document.getElementById("loader");
 const secretMessage = document.getElementById("secret-message");
 const secretText = document.getElementById("secret-text");
 const clickSound = document.getElementById("click-sound");
@@ -10,7 +9,6 @@ const clickSound = document.getElementById("click-sound");
 /* Config */
 const CORRECT = "19 21 3 8 1 19 13 1 18 20 20 5 1 13";
 const MESSAGE = "check under your table";
-const LOADING_MS = 1200; // loader duration
 
 /* Play click sound */
 function playClick() {
@@ -34,25 +32,16 @@ function typeWriter(text, el, speed=50, cb){
   }, speed);
 }
 
-/* Show loader and then reveal secret message */
-function showLoaderThenReveal(){
-  loader.classList.remove("hidden");
-  loader.setAttribute("aria-hidden","false");
+/* Reveal secret message */
+function revealSecret(){
+  secretMessage.classList.remove("hidden");
+  secretMessage.setAttribute("aria-hidden","false");
 
-  setTimeout(()=>{
-    loader.classList.add("hidden");
-    loader.setAttribute("aria-hidden","true");
-
-    secretMessage.classList.remove("hidden");
-    secretMessage.setAttribute("aria-hidden","false");
-
-    typeWriter(MESSAGE, secretText, 50, ()=>{
-      const c = document.createElement("span");
-      c.className="cursor";
-      secretText.appendChild(c);
-    });
-
-  }, LOADING_MS);
+  typeWriter(MESSAGE, secretText, 50, ()=>{
+    const c = document.createElement("span");
+    c.className="cursor";
+    secretText.appendChild(c);
+  });
 }
 
 /* Form submit */
@@ -63,7 +52,7 @@ form.addEventListener("submit", e=>{
   if(passwordInput.value.trim() === CORRECT){
     form.style.display="none";
     document.querySelector(".logo").style.display="none";
-    showLoaderThenReveal();
+    revealSecret();
   } else {
     errorMsg.textContent = "Wrong password. Try again.";
     passwordInput.classList.add("shake");
@@ -73,8 +62,8 @@ form.addEventListener("submit", e=>{
   }
 });
 
-/* Play click on button mousedown */
+/* Play click on button press */
 form.querySelector('button[type="submit"]').addEventListener("mousedown", playClick);
 
-/* Play click when typing */
+/* Play click while typing */
 passwordInput.addEventListener("keydown", playClick);
