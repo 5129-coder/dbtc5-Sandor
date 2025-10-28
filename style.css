@@ -70,21 +70,6 @@ button:hover { background: #0a0; }
 }
 .shake { animation: shake 300ms ease; }
 
-/* Loader */
-#loader {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: rgba(0,0,0,0.6);
-  z-index: 10;
-}
-.loader-img {
-  width: 150px; /* small & mobile friendly */
-  max-width: 80%;
-}
-
 /* Secret message */
 #secret-message {
   margin-top: 20px;
@@ -125,5 +110,4 @@ button:hover { background: #0a0; }
   .logo { width: 150px; margin-bottom: 14px; }
   input[type="password"]{ width: 180px; font-size: 12px; }
   .glitch-text{ font-size: 14px; padding: 6px 10px; }
-  .loader-img{ width: 120px; }
 }
