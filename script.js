@@ -1,102 +1,33 @@
-/* base */
-body {
-  margin: 0;
-  height: 100vh;
-  background: black;
-  color: #eee;
-  font-family: "Courier New", monospace;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  overflow: hidden;
-}
+const correctPasswords = [
+  "ACR333",
+  "admin",
+  "FIvesanDOR",
+  "OpEn_S3samee",
+  "pasSword",
+  "CHAM.OF.SECR~"
+];
 
-/* logo */
-.logo {
-  display: block;
-  margin-bottom: 40px;
-  max-width: 200px;
-  width: 40%;
-  filter: drop-shadow(0 0 6px rgba(255, 0, 0, 0.7));
-}
+const input = document.getElementById("pwd");
+const button = document.getElementById("submitBtn");
+const error = document.getElementById("err");
+const welcome = document.getElementById("welcome");
+const welcomeText = document.getElementById("welcomeText");
+const clickSound = document.getElementById("clickSound");
+const stage = document.querySelector(".stage");
 
-/* panel */
-.panel {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+button.addEventListener("click", () => {
+  clickSound.currentTime = 0;
+  clickSound.play();
 
-input {
-  padding: 10px;
-  font-size: 16px;
-  background: black;
-  border: 1px solid #eee;
-  color: #eee;
-  outline: none;
-  width: 250px;
-}
-
-input::placeholder {
-  color: #888;
-}
-
-button {
-  padding: 10px 16px;
-  background: #eee;
-  color: black;
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-/* error message */
-.error {
-  color: red;
-  margin-top: 12px;
-  font-size: 14px;
-  min-height: 18px;
-}
-
-/* welcome screen */
-.welcome {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: rgba(0, 0, 0, 0.95);
-  color: #0f0;
-  font-family: "Courier New", monospace;
-  font-size: 18px;
-  letter-spacing: 1px;
-  text-align: center;
-  text-transform: lowercase;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.8s ease;
-}
-
-.welcome.show {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.welcome .text {
-  text-shadow: 0 0 6px rgba(0, 255, 0, 0.7);
-}
-
-/* shake animation */
-@keyframes shake {
-  0% { transform: translateX(0); }
-  20% { transform: translateX(-6px); }
-  40% { transform: translateX(6px); }
-  60% { transform: translateX(-4px); }
-  80% { transform: translateX(4px); }
-  100% { transform: translateX(0); }
-}
-
-.stage.shake {
-  animation: shake 0.3s;
-}
+  const value = input.value.trim();
+  if (correctPasswords.includes(value)) {
+    document.querySelector(".panel").style.display = "none";
+    error.textContent = "";
+    welcomeText.textContent = "access granted to the chamber of secrets, kindly show this text to the agent";
+    welcome.classList.add("show");
+  } else {
+    error.textContent = "Incorrect password. Try again.";
+    stage.classList.add("shake");
+    setTimeout(() => stage.classList.remove("shake"), 300);
+  }
+});
