@@ -7,34 +7,26 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
 
-    <!-- Logo -->
-    <img src="dbtc-logo.png.png" alt="DBTC Logo" class="logo">
+  <!-- Logo -->
+  <img src="dbtc-logo.png.png" alt="DBTC Logo" class="logo">
 
-    <!-- Password Form -->
-    <form id="login-form" aria-label="Login Form">
-      <input 
-        type="password" 
-        id="password" 
-        placeholder="insert password" 
-        aria-label="Password"
-        autocomplete="off"
-        autofocus
-      >
-      <button type="submit" aria-label="Check Password">✔</button>
-      <p id="error" role="status" aria-live="polite"></p>
-    </form>
-
-    <!-- Secret message (hidden initially) -->
-    <div id="secret-message" class="hidden" aria-hidden="true">
-      <p class="glitch-text" id="secret-text"></p>
+  <!-- Password Stage -->
+  <div class="stage">
+    <div class="panel">
+      <input id="pwd" type="password" placeholder="insert password" aria-label="Password input">
+      <button id="submitBtn" aria-label="Submit password">✔</button>
     </div>
-
+    <div class="error" id="err" aria-live="polite"></div>
   </div>
 
-  <!-- Click sound -->
-  <audio id="click-sound" src="click.mp3" preload="auto"></audio>
+  <!-- Welcome Screen -->
+  <div class="welcome" id="welcome">
+    <div class="text" id="welcomeText"></div>
+  </div>
+
+  <!-- Audio -->
+  <audio id="clickSound" src="click.mp3" preload="auto"></audio>
 
   <script src="script.js"></script>
 </body>
