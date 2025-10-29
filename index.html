@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DBTC5 Sandor Login</title>
   <link rel="stylesheet" href="style.css">
+
+  <!-- 🟦 PWA Setup -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#003366">
+  <link rel="icon" href="icon-192.png" type="image/png">
 </head>
 <body>
 
@@ -28,6 +33,17 @@
   <!-- Audio -->
   <audio id="clickSound" src="click.mp3" preload="auto"></audio>
 
+  <!-- Script -->
   <script src="script.js"></script>
+
+  <!-- 🟩 Register Service Worker -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js')
+        .then(() => console.log('Service Worker registered!'))
+        .catch(err => console.error('Service Worker failed:', err));
+    }
+  </script>
+
 </body>
 </html>
