@@ -1,20 +1,19 @@
 {
-  "name": "DBTC Sandor App",
+  "name": "DBTC5 Sandor",
   "short_name": "Sandor",
-  "description": "An interactive DBTC Sandor mockup app for students.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#003366",
-  "orientation": "portrait",
+  "description": "Official DBTC5 Sandor site",
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "icons/icon-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "icon-512.png",
+      "src": "icons/icon-512.png",
       "sizes": "512x512",
       "type": "image/png"
     }
