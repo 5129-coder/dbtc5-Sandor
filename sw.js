@@ -1,35 +1,29 @@
-// This is your Service Worker file
+const CACHE_NAME = "dbtc5-cache-v1";
+const urlsToCache = [
+  "/",
+  "/index.html",
+  "/style.css",
+  "/script.js",
+  "/icon-192.png",
+  "/icon-512.png",
+  "/dbtc-logo.png.png",
+  "/click.mp3"
+];
 
-// When the service worker is installed
-self.addEventListener('install', (event) => {
-  console.log('✅ Service Worker installed.');
-
-  // You can add files to cache here (optional)
+// Install
+self.addEventListener("install", event => {
   event.waitUntil(
-    caches.open('sandor-cache-v1').then((cache) => {
-      return cache.addAll([
-        './',
-        './index.html',
-        './style.css',
-        './script.js',
-        './icon-512.png',
-        './manifest.json'
-      ]);
+    caches.open(CACHE_NAME).then(cache => {
+      return cache.addAll(urlsToCache);
     })
   );
 });
 
-// When files are requested, serve them from cache if available
-self.addEventListener('fetch', (event) => {
+// Fetch
+self.addEventListener("fetch", event => {
   event.respondWith(
-    caches.match(event.request).then((response) => {
-      // Return the cached version if there is one, else fetch from network
+    caches.match(event.request).then(response => {
       return response || fetch(event.request);
     })
   );
-});
-
-// When the service worker is activated
-self.addEventListener('activate', (event) => {
-  console.log('🚀 Service Worker activated.');
 });
